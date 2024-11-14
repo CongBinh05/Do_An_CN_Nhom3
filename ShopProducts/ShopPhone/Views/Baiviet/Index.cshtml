@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<ShopPhone.Models.Mpost>
+@{
+    ViewBag.Title = "San pham";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+@Html.Action("Mainmenu", "module")
+
+<!-- /navbar-->
+<section class="pt-3">
+    <div class="container  pt">
+        <div class="row">
+            <div class="col-md-9 bg-white">
+                <h3 class="font-weight-bold text-cam pt-3"><i class="far fa-newspaper"></i> TẤT CẢ BÀI VIẾT</h3>
+                @foreach (var item in Model)
+                {
+                    string title = item.detail;
+                    <ul class="list-unstyled pagination border-top pt-3">
+                        <li><img width="300px;" src="~/public/images/post/@item.img" alt=""></li>
+                        <li class="pl-3">
+                            <a class="card-link text-dark" href="~/@item.slug"><h5 class="font-weight-bold ">@item.title</h5></a>
+                            <span class="font-13 "><i class="far fa-clock"></i> @item.created_at</span>  <span class="text-danger font-14  font-weight-bold"> Ẩm Thực </span>
+
+                           
+                        </li>
+
+                    </ul>
+                }
+                <div class="col-md-12 pt-3">
+                    <div class="pagination-content pagination-sm">
+                        <ul class="pagination  justify-content-center ">
+
+
+                            <li>
+                                <a href="~/bai-viet?page=1" class="page-link text-secondary">
+                                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                @{
+                                    var firstPage = 1;
+                                    if ((int)Model.PageNumber > 1)
+                                    {
+                                        firstPage = (int)Model.PageNumber - 1;
+                                    }
+
+                                    var lastpage = Model.PageNumber;
+                                    if (lastpage < Model.PageCount)
+                                    {
+                                        lastpage = (int)Model.PageNumber + 1;
+                                    }
+
+                                }
+                                <a href="~/bai-viet?page=@firstPage" class="page-link text-secondary ">
+                                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+
+                            @for (int i = Model.PageNumber; i <= Model.PageCount; i++)
+                            {
+
+                                if (i < Model.PageNumber + 5)
+                                {
+                                    <li id="active_@i"><a href="~/bai-viet?page=@i" class="page-link text-secondary">@i  </a></li>
+                                }
+
+                            }
+                            <li>
+                                <a href="~/bai-viet?page=@lastpage" class="page-link text-secondary">
+                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/bai-viet?page=@Model.PageCount" class="page-link text-secondary">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.Action("topiccategory", "Baiviet");
+            </div>
+        </div>
+
+    </div>
+</section>
+<style>
+    .active1 {
+        background-color: darkorange;
+    }
+</style>
+<script>
+    $("#active_@Model.PageNumber").addClass("active1");
+</script>
+

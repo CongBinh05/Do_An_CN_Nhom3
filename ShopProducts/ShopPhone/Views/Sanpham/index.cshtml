@@ -1,0 +1,136 @@
+﻿@model PagedList.IPagedList<ShopPhone.Models.Mproduct>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "San pham";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+@Html.Action("Mainmenu", "module")
+
+<section class="container-fluid pt-3">
+    <div class="container ">
+        <div class="row">
+            <div class="col-md-3">
+                @Html.Action("ListcategoryAll", "module")
+            </div>
+            <div class="col-md-9">
+                <div class="card ">
+                    <h3 class="card-header text-xanhduong bg-white">Tất Cả Sản Phẩm</h3>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                int sale = (int)item.pricesale;
+                                float price = (int)item.price - (int)item.price / 100 * (int)sale;
+                                if (sale > 0)
+                                {
+                                    <div class="col-md-3 py-2 ">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="position-relative">
+                                                    <div class="arrow-up">
+                                                        <span class=" text-white pl-3">-@sale%</span>
+                                                    </div>
+                                                    <a href="~/item.slug"><img class="card-img-top" src="~/public/images/@item.img" alt="Card image"></a>
+                                                </div>
+                                                <div class="card-title text-dark pt-1"><h6><a href="~/@item.slug" class="text-danger">@item.name</a></h6></div>
+                                                <div class="card-title text-dark">
+                                                    <h6 class="font-weight-bold"><strike> @item.price.ToString("N0") VND </strike></h6>
+                                                    <h6 class="font-weight-bold text-danger"> @price.ToString("N0") VND</h6>
+                                                    <button id="addcartH" onclick="addcart(@item.ID)" class="btn-button-cart w-100  btn-dodam"><i class="fas fa-cart-plus"></i> Mua Ngay</button>
+                                                    <input type="hidden" value="1" id="sel1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-3 py-2 ">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="position-relative">
+                                                    <a href="~/@item.slug"><img class="card-img-top" src="~/public/images/@item.img" alt="Card image"></a>
+                                                </div>
+                                                <div class="card-title text-dark pt-1"><h6><a href="~/@item.slug" class="text-danger">@item.name</a></h6></div>
+                                                <div class="card-title text-dark">
+                                                    <h6 class="font-weight-bold text-orange"> @item.price.ToString("N0") VND </h6>
+                                                    <button id="addcartH" onclick="addcart(@item.ID)" class="btn-button-cart w-100  btn-dodam"><i class="fas fa-cart-plus"></i> Mua Ngay</button>
+                                                    <input type="hidden" value="1" id="sel1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+                    <div class="pagination-content pagination-sm">
+                        <ul class="pagination  justify-content-center">
+
+
+                            <li>
+                                <a href="~/sanpham?page=1" class="page-link text-secondary">
+                                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                @{
+                                    var firstPage = 1;
+                                    if ((int)Model.PageNumber > 1)
+                                    {
+                                        firstPage = (int)Model.PageNumber - 1;
+                                    }
+
+                                    var lastpage = Model.PageNumber;
+                                    if (lastpage < Model.PageCount)
+                                    {
+                                        lastpage = (int)Model.PageNumber + 1;
+                                    }
+
+                                }
+                                <a href="~/sanpham?page=@firstPage" class="page-link text-secondary ">
+                                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                </a>
+                            </li>
+
+                            @for (int i = Model.PageNumber; i <= Model.PageCount; i++)
+                            {
+
+                                if (i < Model.PageNumber + 5)
+                                {
+                                    <li id="active_@i"><a href="~/sanpham?page=@i" class="page-link text-secondary">@i  </a></li>
+                                }
+
+                            }
+                            <li>
+                                <a href="~/sanpham?page=@lastpage" class="page-link text-secondary">
+                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/sanpham?page=@Model.PageCount" class="page-link text-secondary">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .active1 {
+        background-color: darkorange;
+    }
+</style>
+<script>
+    $("#active_@Model.PageNumber").addClass("active1");
+</script>

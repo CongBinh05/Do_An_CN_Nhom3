@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ShopPhone.Models.Mpost>
+@foreach (var item in Model)
+{
+    string title = item.detail;
+    <ul class="list-unstyled pagination border-top pt-3">
+        <li><img width="300px;" src="~/public/images/post/@item.img" alt=""></li>
+        <li class="pl-3">
+            <a class="card-link text-dark" href="~/@item.slug"><h5 class="font-weight-bold ">@item.title</h5></a>
+            <span class="font-13 "><i class="far fa-clock"></i> @item.created_at</span>  <span class="text-danger font-14  font-weight-bold"> Tin tức </span>
+        </li>
+
+    </ul>
+}

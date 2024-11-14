@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ShopPhone.Models.Mcategory>
+
+@{
+    ViewBag.Title = "Trang Chu";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+}
+@Html.Action("Mainmenu", "module")
+
+<!-- list category & sliser-->
+<section class="container-fluid">
+    <div>
+        <div class="container pt-3">
+            <div class="row">
+                <!-- listcategory-->
+                <div class="col-md-4 w-100">
+                    @Html.Action("Listcategory", "module")
+                </div>
+                <div class="col-md-8">
+                    @Html.Action("slider", "module")
+                </div>
+            </div>
+        </div>
+    </div>
+    @*@Html.Partial("~/Views/Module/_ServiceCustomer.cshtml")*@
+</section>
+
+<section class="container-fluid pt-3">
+    <div class="container ">
+        <div class="card">
+            <h3 class="card-header text-xanhduong bg-white">Sản Phẩm Khuyến mãi</h3>
+            <div class="card-body">
+                <div class="row">
+                    @Html.Action("_productsale", "Sanpham")
+                </div>
+            </div>
+</section>
+<section class="container-fluid pt-3">
+    <div class="container ">
+        <div class="card">
+            <h3 class="card-header text-xanhduong bg-white">Sản Phẩm Mới</h3>
+            <div class="card-body">
+                <div class="row">
+                    @Html.Action("_productNew", "Sanpham")
+                </div>
+            </div>
+</section>
+
+<section class="container-fluid pt-3">
+    <div class="container ">
+        <div class="card">
+            <h3 class="card-header text-xanhduong bg-white">Sản Phẩm Bán chạy</h3>
+            <div class="card-body">
+                <div class="row">
+                    @Html.Action("_productBestSeller", "Sanpham")
+                </div>
+            </div>
+</section>
+
+
+<div id="fb-root"></div>
